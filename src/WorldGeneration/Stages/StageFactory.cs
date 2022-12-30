@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Cascade.src.WorldGeneration.Tiles;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cascade.src.WorldGeneration
+namespace Cascade.src.WorldGeneration.Stages
 {
     internal class StageFactory : IStageFactory
     {
@@ -13,9 +15,9 @@ namespace Cascade.src.WorldGeneration
             return new SampleStage();
         }
 
-        public void Initialize()
+        public void Initialize(Game game)
         {
-            //TODO
+            TileIndex.Initalize(game);
         }
     }
 }

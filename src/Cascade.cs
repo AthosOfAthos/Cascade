@@ -20,7 +20,8 @@ public class Cascade: Game {
     
 	public Cascade() {
         _graphics = new GraphicsDeviceManager(this);
-		Content.RootDirectory = "Content";
+ 
+        Content.RootDirectory = "Content";
         IsMouseVisible = true;
 
         //Manager content, this should be redone with dependency injection
@@ -33,6 +34,10 @@ public class Cascade: Game {
     protected override void Initialize()
     {
         _managers.ForEach(manager => manager.Initialize(this));
+        _graphics.ApplyChanges();
+        _graphics.PreferredBackBufferWidth = GraphicsDevice.Adapter.CurrentDisplayMode.Width;
+        _graphics.PreferredBackBufferHeight = GraphicsDevice.Adapter.CurrentDisplayMode.Height;
+        _graphics.ApplyChanges();
         base.Initialize();
     }
 

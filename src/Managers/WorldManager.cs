@@ -1,4 +1,5 @@
 ﻿using Cascade.src.WorldGeneration;
+using Cascade.src.WorldGeneration.Stages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -19,14 +20,17 @@ namespace Cascade.src.Managers
 
         public override void Initialize(Game game)
         {
-            _stageFactory.Initialize();
+            _stageFactory.Initialize(game);
+            _stages.Add(_stageFactory.GenerateStage());
+            _currentStage = _stages.First();
+            _currentStage.Initalize();
             base.Initialize(game);
         }
 
         public override void LoadContent()
         {
-            _stages.Add(_stageFactory.GenerateStage());
-            _currentStage = _stages.First();
+            
+            
             _currentStage.LoadContent(_graphics);
             base.LoadContent();
         }

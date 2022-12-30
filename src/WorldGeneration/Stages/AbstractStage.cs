@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Cascade.src.WorldGeneration.Chunks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cascade.src.WorldGeneration
+namespace Cascade.src.WorldGeneration.Stages
 {
     internal abstract class AbstractStage : IStage
     {
@@ -26,45 +27,45 @@ namespace Cascade.src.WorldGeneration
         protected void Initalize(Type chunkType, StageLevel level)
         {
             this.level = level;
-            try
+
+            chunks = new IChunk[height][];
+            for (int y = 0; y < height; y++)
             {
-                chunks = new IChunk[height][];
-                for (int y = 0; y < height; y++)
+                chunks[y] = new IChunk[width];
+                for (int x = 0; x < width; x++)
                 {
-                    chunks[y] = new IChunk[width];
-                    for (int x = 0; x < width; x++)
-                    {
-                        chunks[y][x] = Activator.CreateInstance(chunkType) as IChunk ?? throw new Exception();
-                        chunks[y][x]?.Intialize(x, y);
-                    }
+                    chunks[y][x] = Activator.CreateInstance(chunkType) as IChunk ?? throw new Exception();
+                    chunks[y][x]?.Intialize(chunkSize, x, y);
                 }
-            }catch(Exception ex)
-            {
-                throw;
             }
-            
+
+
         }
 
         public abstract void LoadContent(GraphicsDeviceManager? _graphics);
 
         public void Draw(SpriteBatch? _spriteBatch, GameTime gameTime)
         {
+            Console.WriteLine("B");
+            _spriteBatch?.Begin();
             for (int y = 0; y < chunks?.Length; y++)
             {
                 for (int x = 0; x < chunks[y].Length; x++)
                 {
-                    chunks[y][x].Draw(_spriteBatch,gameTime, x, y);
+                    chunks[y][x].Draw(_spriteBatch, gameTime, x, y);
                 }
             }
+            _spriteBatch?.End();
 
         }
 
         public void Update(GameTime gameTime)
         {
-            for (int y = 0; y < chunks?.Length; y++) {
+            for (int y = 0; y < chunks?.Length; y++)
+            {
                 for (int x = 0; x < chunks[y].Length; x++)
                 {
-                    chunks[y][x].Update(gameTime, x,y);
+                    chunks[y][x].Update(gameTime, x, y);
                 }
             }
         }
