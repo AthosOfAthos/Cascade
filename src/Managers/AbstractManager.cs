@@ -21,7 +21,7 @@ namespace Cascade.src.Managers
 
         public virtual void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(_game.GraphicsDevice);
+            _spriteBatch = new SpriteBatch(_game?.GraphicsDevice);
         }
 
         public virtual void Update(GameTime gameTime)

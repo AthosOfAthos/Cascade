@@ -8,6 +8,6 @@ namespace Cascade.src.WorldGeneration.Tiles
 {
     internal class BlankTile : ITile
     {
-        public string Name => "Blank";
+        public static string Name => "Blank";
     }
 }

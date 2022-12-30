@@ -13,9 +13,9 @@ namespace Cascade.src.WorldGeneration.Stages
     {
         public StageLevel level { get; set; }
 
-        public int height => 16;
+        public int height => 64;
 
-        public int width => 16;
+        public int width => 128;
 
         //TODO this variable needs to be communicated to the chunk
         public int chunkSize => 16;
@@ -27,7 +27,6 @@ namespace Cascade.src.WorldGeneration.Stages
         protected void Initalize(Type chunkType, StageLevel level)
         {
             this.level = level;
-
             chunks = new IChunk[height][];
             for (int y = 0; y < height; y++)
             {
@@ -46,12 +45,12 @@ namespace Cascade.src.WorldGeneration.Stages
 
         public void Draw(SpriteBatch? _spriteBatch, GameTime gameTime)
         {
-            Console.WriteLine("B");
             _spriteBatch?.Begin();
             for (int y = 0; y < chunks?.Length; y++)
             {
                 for (int x = 0; x < chunks[y].Length; x++)
                 {
+                    //Around here camera needs to be passed in
                     chunks[y][x].Draw(_spriteBatch, gameTime, x, y);
                 }
             }

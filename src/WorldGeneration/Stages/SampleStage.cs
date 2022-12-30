@@ -13,6 +13,7 @@ namespace Cascade.src.WorldGeneration.Stages
         public override void Initalize()
         {
             Initalize(typeof(SampleChunk), StageLevel.level1);
+            //Should do all of the atom indexing for the stage here 
         }
 
         public override void LoadContent(GraphicsDeviceManager? _graphics)

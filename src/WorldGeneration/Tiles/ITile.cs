@@ -8,6 +8,6 @@ namespace Cascade.src.WorldGeneration.Tiles
 {
     internal interface ITile
     {
-        string Name { get; }
+        static string Name { get; }
     }
 }

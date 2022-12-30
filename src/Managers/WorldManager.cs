@@ -29,9 +29,7 @@ namespace Cascade.src.Managers
 
         public override void LoadContent()
         {
-            
-            
-            _currentStage.LoadContent(_graphics);
+            _currentStage?.LoadContent(_graphics);
             base.LoadContent();
         }
 
