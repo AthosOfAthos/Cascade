@@ -2,3 +2,8 @@ obj
 bin
 *.vsidx
 *.lock
+.vs/Cascade/DesignTimeBuild/.dtbcache.v2
+.vs/Cascade/v17/.futdcache.v2
+.vs/Cascade/v17/.suo
+.vs/ProjectEvaluation/cascade.metadata.v5.2
+.vs/ProjectEvaluation/cascade.projects.v5.2

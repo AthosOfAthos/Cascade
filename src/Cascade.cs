@@ -16,7 +16,7 @@ public class Cascade: Game {
     
     private GraphicsDeviceManager _graphics;
 
-    private IEnumerable<IManager> _managers;
+    private List<IManager> _managers;
     
 	public Cascade() {
         _graphics = new GraphicsDeviceManager(this);
@@ -32,20 +32,20 @@ public class Cascade: Game {
 
     protected override void Initialize()
     {
-        foreach (IManager manager in _managers) { manager.Initialize(this); }
+        _managers.ForEach(manager => manager.Initialize(this));
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        foreach (IManager manager in _managers) { manager.LoadContent(); }
+        _managers.ForEach(manager => manager.LoadContent());
         base.LoadContent();
     }
 
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); }
-        foreach (IManager manager in _managers) { manager.Update(gameTime); }
+        _managers.ForEach(manager => manager.Update(gameTime));
         
         base.Update(gameTime);
     }
@@ -53,7 +53,7 @@ public class Cascade: Game {
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Gray);
-        foreach (IManager manager in _managers) { manager.Draw(gameTime); }
+        _managers.ForEach(manager => manager.Draw(gameTime));
         
         base.Draw(gameTime);
     }

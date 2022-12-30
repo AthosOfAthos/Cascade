@@ -10,9 +10,9 @@ namespace Cascade.src.Managers
 {
     internal abstract class AbstractManager : IManager
     {
-        private SpriteBatch _spriteBatch;
-        private GraphicsDeviceManager _graphics;
-        private Game _game { get; set; }
+        protected SpriteBatch? _spriteBatch;
+        protected GraphicsDeviceManager? _graphics;
+        protected Game? _game { get; set; }
 
         public virtual void Initialize(Game game)
         {
