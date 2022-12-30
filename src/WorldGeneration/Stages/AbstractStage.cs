@@ -13,9 +13,9 @@ namespace Cascade.src.WorldGeneration.Stages
     {
         public StageLevel level { get; set; }
 
-        public int height => 64;
+        public int height => 4;
 
-        public int width => 128;
+        public int width => 8;
 
         //TODO this variable needs to be communicated to the chunk
         public int chunkSize => 16;

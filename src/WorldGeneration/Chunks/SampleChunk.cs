@@ -12,20 +12,22 @@ namespace Cascade.src.WorldGeneration.Chunks
 
         public string[][]? Tiles { get; set; }
 
-        private int size = 32;
+        private int tileSize = 32;
+        private int chunkSize;
 
         public void Intialize(int size, int xloc, int yloc)
         {
             //TODO - use whatever the algorithm is to assign the block level values
 
             //for the sample its going to be a sine wave
+            chunkSize = size; 
             Tiles = new string[size][];
             for (int y = 0; y < size; y++)
             {
                 Tiles[y] = new string[size];
                 for (int x = 0; x < size; x++)
                 {
-                    if (Math.Sin(xloc) > 0 && Math.Sin(yloc)>0)
+                    if (x == 0 || y ==0 || y==size-1 || x==size-1)
                     {
                         Tiles[y][x] = TileIndex.Sample;
                     }
@@ -52,7 +54,7 @@ namespace Cascade.src.WorldGeneration.Chunks
                     for (int x = 0; x < Tiles[y].Length; x++)
                     {
                         TileIndex.getTexture(Tiles[x][y], out tile);
-                        _spriteBatch?.Draw(tile, new Microsoft.Xna.Framework.Rectangle(xloc*size, yloc*size, size, size), Microsoft.Xna.Framework.Color.White);
+                        _spriteBatch?.Draw(tile, new Microsoft.Xna.Framework.Rectangle(xloc*chunkSize*tileSize+x*tileSize, yloc*chunkSize*tileSize+y*tileSize, tileSize, tileSize), Microsoft.Xna.Framework.Color.White);
                         bool b = old_tile == tile;
                         old_tile = tile;
                         
