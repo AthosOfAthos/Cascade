@@ -13,28 +13,26 @@ namespace Cascade.src.WorldGeneration.Stages
     {
         public StageLevel level { get; set; }
 
-        public int height => 4;
+        public int height => 8;
 
         public int width => 8;
 
-        //TODO this variable needs to be communicated to the chunk
-        public int chunkSize => 16;
+        public int chunkSize => 32;
 
-        public IChunk[][]? chunks { get; set; }
+        public IChunk[,]? chunks { get; set; }
 
         public abstract void Initalize();
 
         protected void Initalize(Type chunkType, StageLevel level)
         {
             this.level = level;
-            chunks = new IChunk[height][];
+            chunks = new IChunk[height,width];
             for (int y = 0; y < height; y++)
             {
-                chunks[y] = new IChunk[width];
                 for (int x = 0; x < width; x++)
                 {
-                    chunks[y][x] = Activator.CreateInstance(chunkType) as IChunk ?? throw new Exception();
-                    chunks[y][x]?.Intialize(chunkSize, x, y);
+                    chunks[y,x] = Activator.CreateInstance(chunkType) as IChunk ?? throw new Exception();
+                    chunks[y,x]?.Intialize(chunkSize, x, y);
                 }
             }
 
@@ -43,28 +41,28 @@ namespace Cascade.src.WorldGeneration.Stages
 
         public abstract void LoadContent(GraphicsDeviceManager? _graphics);
 
-        public void Draw(SpriteBatch? _spriteBatch, GameTime gameTime)
+        public virtual void Draw(SpriteBatch? _spriteBatch, GameTime gameTime)
         {
             _spriteBatch?.Begin();
-            for (int y = 0; y < chunks?.Length; y++)
+            for (int y = 0; y < chunks?.GetLength(0); y++)
             {
-                for (int x = 0; x < chunks[y].Length; x++)
+                for (int x = 0; x < chunks.GetLength(1); x++)
                 {
                     //Around here camera needs to be passed in
-                    chunks[y][x].Draw(_spriteBatch, gameTime, x, y);
+                    chunks[y,x].Draw(_spriteBatch, gameTime, x, y);
                 }
             }
             _spriteBatch?.End();
 
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
-            for (int y = 0; y < chunks?.Length; y++)
+            for (int y = 0; y < chunks?.GetLength(0); y++)
             {
-                for (int x = 0; x < chunks[y].Length; x++)
+                for (int x = 0; x < chunks.GetLength(1); x++)
                 {
-                    chunks[y][x].Update(gameTime, x, y);
+                    chunks[y,x].Update(gameTime, x, y);
                 }
             }
         }

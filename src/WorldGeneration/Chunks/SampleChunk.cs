@@ -10,9 +10,9 @@ namespace Cascade.src.WorldGeneration.Chunks
     {
         public bool isDirty { get; set; }
 
-        public string[][]? Tiles { get; set; }
+        public string[,]? Tiles { get; set; }
 
-        private int tileSize = 32;
+        private int tileSize = 8;
         private int chunkSize;
 
         public void Intialize(int size, int xloc, int yloc)
@@ -21,19 +21,18 @@ namespace Cascade.src.WorldGeneration.Chunks
 
             //for the sample its going to be a sine wave
             chunkSize = size; 
-            Tiles = new string[size][];
+            Tiles = new string[size,size];
             for (int y = 0; y < size; y++)
             {
-                Tiles[y] = new string[size];
                 for (int x = 0; x < size; x++)
                 {
                     if (x == 0 || y ==0 || y==size-1 || x==size-1)
                     {
-                        Tiles[y][x] = TileIndex.Sample;
+                        Tiles[y,x] = TileIndex.Sample;
                     }
                     else
                     {
-                        Tiles[y][x] = TileIndex.Blank;
+                        Tiles[y,x] = TileIndex.Blank;
                     }
 
                 }
@@ -48,12 +47,12 @@ namespace Cascade.src.WorldGeneration.Chunks
             Texture2D old_tile = null;
             if (isDirty)
             {
-                isDirty = true;
-                for (int y = 0; y < Tiles?.Length; y++)
+                isDirty = false;
+                for (int y = 0; y < Tiles?.GetLength(0); y++)
                 {
-                    for (int x = 0; x < Tiles[y].Length; x++)
+                    for (int x = 0; x < Tiles?.GetLength(1); x++)
                     {
-                        TileIndex.getTexture(Tiles[x][y], out tile);
+                        TileIndex.getTexture(Tiles[y,x], out tile);
                         _spriteBatch?.Draw(tile, new Microsoft.Xna.Framework.Rectangle(xloc*chunkSize*tileSize+x*tileSize, yloc*chunkSize*tileSize+y*tileSize, tileSize, tileSize), Microsoft.Xna.Framework.Color.White);
                         bool b = old_tile == tile;
                         old_tile = tile;
@@ -69,6 +68,42 @@ namespace Cascade.src.WorldGeneration.Chunks
         public void Update(GameTime gameTime, int x, int y)
         {
             //TODO
+        }
+
+        internal void Notify(int i, int j, double[,]? res)
+        {
+            isDirty = true;
+            for (int y = 0; y < Tiles?.GetLength(0); y++)
+            {
+                for (int x = 0; x < Tiles.GetLength(1); x++)
+                {
+                    int adj = (int)Math.Round((res[i+y,j+x])*5);
+                    switch (adj)
+                    {
+                        default:
+                        case 0:
+                            Tiles[y,x] = TileIndex.Red;
+                            break;
+                        case 1:
+                            Tiles[y,x] = TileIndex.Orange;
+                            break;
+                        case 2:
+                            Tiles[y,x] = TileIndex.Yellow;
+                            break;
+                        case 3:
+                            Tiles[y,x] = TileIndex.Green;
+                            break;
+                        case 4:
+                            Tiles[y,x] = TileIndex.Blue;
+                            break;
+                        case 5:
+                            Tiles[y,x] = TileIndex.Purple;
+                            break;
+                    }
+                    //res[yloc * chunkSize + y][xloc * chunkSize + x] = -1;
+
+                }
+            }
         }
     }
 }

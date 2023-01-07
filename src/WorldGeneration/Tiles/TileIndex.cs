@@ -12,6 +12,12 @@ namespace Cascade.src.WorldGeneration.Tiles
     {
         public static readonly string Blank = "Blank";
         public static readonly string Sample = "Sample";
+        public static readonly string Red = "Red";
+        public static readonly string Orange = "Orange";
+        public static readonly string Yellow = "Yellow";
+        public static readonly string Green = "Green";
+        public static readonly string Blue = "Blue";
+        public static readonly string Purple = "Purple";
 
         private static Game? game;
 

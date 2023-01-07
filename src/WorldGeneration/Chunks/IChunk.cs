@@ -11,7 +11,7 @@ namespace Cascade.src.WorldGeneration.Chunks
 {
     internal interface IChunk
     {
-        string[][]? Tiles { get; }
+        string[,]? Tiles { get; }
         bool isDirty { get; set; }
         void Intialize(int size, int x, int y);
         void Update(GameTime gameTime, int x, int y);

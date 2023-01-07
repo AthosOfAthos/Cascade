@@ -15,7 +15,7 @@ namespace Cascade.src.WorldGeneration.Stages
         int height { get; }
         int width { get; }
         int chunkSize { get; }
-        IChunk[][]? chunks { get; }
+        IChunk[,]? chunks { get; }
 
         void Initalize();
         void LoadContent(GraphicsDeviceManager? _graphics);
