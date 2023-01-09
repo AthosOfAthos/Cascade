@@ -12,8 +12,8 @@ namespace Cascade.src.WorldGeneration.Stages
 {
     internal class SampleStage : AbstractStage
     {
-        private Turing.Turing? turing;
-        private double[] res;
+        private Turing.Turing2? turing;
+        private double[,] res;
         public override void Initalize()
         {
             Initalize(typeof(SampleChunk), StageLevel.level1);
@@ -34,28 +34,19 @@ namespace Cascade.src.WorldGeneration.Stages
         {
             base.Update(gameTime);
 
-            //res = turing?.NextPattern(turing.GetScales()).GetAwaiter().GetResult() ?? new double[chunkSize * chunkSize * height * width];
-            res = new double[chunkSize * chunkSize * height * width];
+            res = turing?.PerfPattern(turing.GetScales()) ?? new double[height,width];
+            //res = new double[chunkSize * chunkSize * height * width];
             Random rnd = new Random();
             for (int i = 0; i < res.Length; i++)
             {
-                res[i] = rnd.NextDouble();
-            }
-            double[,] altRes = new double[chunkSize * height, chunkSize * width];
-            List<double> ind = new List<double>();
-            for (int i = 0; i < altRes.GetLength(0); i++)//height
-            {
-                for (int j = 0; j < altRes.GetLength(1); j++)//width
-                {
-                    altRes[i, j] = res[j + i * altRes.GetLength(0)];
-                }
+                //res[i] = rnd.NextDouble();
             }
             for (int i = 0; i<chunks?.GetLength(0); i++)//height
             {
                 for(int j=0; j<chunks.GetLength(1); j++)//width
                 {
 
-                    ((SampleChunk)chunks[i,j]).Notify(i*chunkSize,j*chunkSize, altRes);
+                    ((SampleChunk)chunks[i,j]).Notify(i*chunkSize,j*chunkSize, res);
                 }
             }
             

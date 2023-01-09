@@ -8,15 +8,15 @@ namespace Cascade.src.Turing
 {
     public class Scale
     {
-        public Scale(double activatorRadius, double inhibitorRadius, double increment)
+        public Scale(int activatorRadius, int inhibitorRadius, double increment)
         {
             ActivatorRadius = activatorRadius;
             InhibitorRadius = inhibitorRadius;
             Increment = increment;
         }
 
-        public double ActivatorRadius { get; set; }
-        public double InhibitorRadius { get; set; } 
+        public int ActivatorRadius { get; set; }
+        public int InhibitorRadius { get; set; } 
         public double Increment { get; set; }
         
     }

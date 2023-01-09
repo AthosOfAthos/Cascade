@@ -15,8 +15,6 @@ public class Cascade: Game {
     static void Main(string[] args) {
         Game game = new Cascade();
         game.Run();
-        //Turing t = new Turing(250, 250);
-        //double[] outvar = t.NextPattern(t.GetScales()).GetAwaiter().GetResult();
     }
     
     private GraphicsDeviceManager _graphics;
@@ -51,7 +49,6 @@ public class Cascade: Game {
         _managers.ForEach(manager => manager.LoadContent());
         base.LoadContent();
     }
-    Stopwatch sw;
     protected override void Update(GameTime gameTime)
     {
 
@@ -65,23 +62,8 @@ public class Cascade: Game {
 
     protected override void Draw(GameTime gameTime)
     {
-        if (sw == null)
-        {
-            sw = new Stopwatch();
-        }
-        else
-        {
-            sw.Stop();
-            long a = sw.ElapsedMilliseconds;
-        }
-        Stopwatch s2 = new Stopwatch();
-        s2.Start();
         //GraphicsDevice.Clear(Color.Gray);
         _managers.ForEach(manager => manager.Draw(gameTime));
-        
         base.Draw(gameTime);
-        s2.Stop();
-        long b = s2.ElapsedMilliseconds;
-        sw.Restart();
     }
 }
